@@ -1,0 +1,33 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: tanzu-java-web-app.dev-ns-02.dieunkrauts.de.20231205092920.0.0
+spec:
+  refName: tanzu-java-web-app.dev-ns-02.dieunkrauts.de
+  version: 20231205092920.0.0
+  releaseNotes: |
+    Release v20231205092920.0.0 of package tanzu-java-web-app.dev-ns-02.dieunkrauts.de
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: harbor.dieunkrauts.de/tap/workloads/tanzu-java-web-app-dev-ns-02-bundle@sha256:8d5380a408be9d83e14797fe2b27d8478e3c74340122c135abd06a45b6ba1766
+      template:
+      - ytt:
+          paths:
+          - .
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}
+  valuesSchema:
+    openAPIv3:
+      type: object
+      additionalProperties: false
+      properties:
+        workload_name:
+          type: string
+          default: ""
+
